@@ -74,7 +74,7 @@ impl Sodg {
         let vtx1 = self
             .vertices
             .get_mut(&v1)
-            .context(format!("Can't depart from ν{}, it's absent", v1))?;
+            .context(format!("Can't depart from ν{v1}, it's absent"))?;
         vtx1.edges
             .retain(|e| Self::split_a(&e.a).0 != Self::split_a(a).0);
         vtx1.edges.push(Edge::new(v2, a));
@@ -98,7 +98,7 @@ impl Sodg {
         let vtx = self
             .vertices
             .get_mut(&v)
-            .context(format!("Can't find ν{}", v))?;
+            .context(format!("Can't find ν{v}"))?;
         vtx.data = d.clone();
         self.validate(vec![v])?;
         trace!("#data: data of ν{} set to {}", v, d);
@@ -119,10 +119,7 @@ impl Sodg {
     ///
     /// If vertex `v1` is absent, an `Err` will be returned.
     pub fn data(&self, v: u32) -> Result<Hex> {
-        let vtx = self
-            .vertices
-            .get(&v)
-            .context(format!("Can't find ν{}", v))?;
+        let vtx = self.vertices.get(&v).context(format!("Can't find ν{v}"))?;
         Ok(vtx.data.clone())
     }
 
